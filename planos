@@ -1,0 +1,263 @@
+<!DOCTYPE html> 
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #3d5ca7;
+            background-color: #f2f2f2;
+            margin: 20px;
+            display: flex; /* Flexbox para centralizar o conteúdo */
+            justify-content: center; /* Centraliza horizontalmente */
+            align-items: center; /* Centraliza verticalmente */
+            height: 100vh; /* Altura total da tela para centralização vertical */
+        }
+        .table-container {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+            width: 300px; /* Largura fixa do container para melhor visualização */
+        }
+        .header {
+            display: flex;
+            flex-direction: column; /* Mudança para coluna */
+            align-items: center; /* Centraliza horizontalmente os itens */
+            padding: 10px;
+            background-color: white;
+            color: #3d5ca7;
+        }
+        .header img {
+            width: 100px; /* Aumenta o tamanho do ícone */
+            height: 100px; /* Aumenta o tamanho do ícone */
+            margin: 0; /* Remove margens */
+        }
+        .header h1 {
+            font-size: 24px; /* Aumenta o tamanho do texto do nome do plano */
+            text-align: center; /* Centraliza o texto do nome do plano */
+            margin: 10px 0; /* Margem superior e inferior */
+        }
+        .header .buttons {
+            display: flex; /* Alinha os botões horizontalmente */
+            justify-content: center; /* Centraliza os botões horizontalmente */
+            gap: 10px; /* Espaço entre os botões */
+        }
+        .plan-info {
+            padding: 15px;
+        }
+        .features {
+            padding: 15px;
+            max-height: 200px; /* Limita a altura da lista de funcionalidades */
+            overflow-y: auto; /* Habilita rolagem vertical */
+            margin-bottom: 10px; /* Espaço para o botão "Veja mais" */
+        }
+        .features ul {
+            list-style: none;
+            padding: 0;
+        }
+        .features li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .checkmark {
+            margin-left: 8px;
+            color: #3d5ca7;
+        }
+        .button {
+            background-color: white; /* Remove o fundo azul das setas */
+            color: #3d5ca7; /* Mantém a cor do texto das setas */
+            border: 2px solid #3d5ca7; /* Adiciona uma borda ao botão */
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s, color 0.3s; /* Adiciona transição para a cor */
+            width: 50px; /* Tamanho fixo para as setas */
+        }
+        .button:hover {
+            background-color: #3d5ca7; /* Muda o fundo ao passar o mouse */
+            color: white; /* Muda a cor do texto ao passar o mouse */
+        }
+        .see-more-button {
+            background-color: #3d5ca7; /* Cor do fundo do botão "Veja mais funcionalidades" */
+            color: white; /* Cor do texto do botão */
+            border: none; /* Remove a borda do botão */
+            padding: 15px; /* Espaçamento interno */
+            cursor: pointer; /* Mão ao passar o mouse */
+            border-radius: 0; /* Borda arredondada zero para ocupar a largura total */
+            width: 100%; /* O botão ocupa toda a largura do card */
+            transition: background 0.3s; /* Transição ao passar o mouse */
+        }
+        .see-more-button:hover {
+            background-color: #2c4e8f; /* Muda o fundo ao passar o mouse */
+        }
+        @media (min-width: 768px) {
+            .table-container {
+                display: flex;
+                flex-direction: column;
+            }
+            .header {
+                display: block;
+            }
+            .features {
+                max-height: none; /* Remove limite de altura no desktop */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="table-container">
+        <div class="header">
+            <img id="plan-icon" src="https://i.postimg.cc/VNjLGhYM/CONE-PLANO-ONLIS-GR-TIS-1-B-1.png" alt="Ícone do plano">
+            <h1 id="plan-name">Empreendedor</h1>
+            <div class="buttons">
+                <button class="button" onclick="changePlan('prev')">←</button>
+                <button class="button" onclick="changePlan('next')">→</button>
+            </div>
+        </div>
+        <div class="plan-info" id="plan-info">
+            <p>Preço: <span id="plan-price">R$ 0,00</span></p>
+            <p>Usuários: <span id="plan-users">1</span></p>
+            <p>Quantidade de PDVs: <span id="plan-pdvs">1</span></p>
+        </div>
+        <div class="features">
+            <ul id="features-list"></ul>
+        </div>
+        <button class="see-more-button" onclick="seeMore()">Veja mais funcionalidades</button> <!-- Botão ajustado para ocupar toda a largura -->
+    </div>
+
+    <script>
+        // Definição dos planos
+        const plans = [
+            {
+                name: "Empreendedor",
+                price: "Gratuito",
+                users: "1",
+                pdvs: "1",
+                features: [
+                    "Funcionalidade 1 do Empreendedor",
+                    "Funcionalidade 2 do Empreendedor",
+                    "Funcionalidade 3 do Empreendedor",
+                    "Funcionalidade 4 do Empreendedor",
+                    "Funcionalidade 5 do Empreendedor",
+                    "Funcionalidade 6 do Empreendedor",
+                    "Funcionalidade 7 do Empreendedor",
+                    "Funcionalidade 8 do Empreendedor",
+                    "Funcionalidade 9 do Empreendedor"
+                ],
+                icon: "https://i.postimg.cc/VNjLGhYM/CONE-PLANO-ONLIS-GR-TIS-1-B-1.png"
+            },
+            {
+                name: "Conquistador",
+                price: "R$ 59,99/mês",
+                users: "3",
+                pdvs: "2",
+                features: [
+                    "Funcionalidade 1 do Conquistador",
+                    "Funcionalidade 2 do Conquistador",
+                    "Funcionalidade 3 do Conquistador",
+                    "Funcionalidade 4 do Conquistador",
+                    "Funcionalidade 5 do Conquistador",
+                    "Funcionalidade 6 do Conquistador",
+                    "Funcionalidade 7 do Conquistador",
+                    "Funcionalidade 8 do Conquistador",
+                    "Funcionalidade 9 do Conquistador"
+                ],
+                icon: "https://i.postimg.cc/MpfGRTN9/CONE-PLANO-ONLIS-CONQUISTADOR-1-B-1.png"
+            },
+            {
+                name: "Explorador",
+                price: "R$ 119,90/mês",
+                users: "5",
+                pdvs: "3",
+                features: [
+                    "Funcionalidade 1 do Explorador",
+                    "Funcionalidade 2 do Explorador",
+                    "Funcionalidade 3 do Explorador",
+                    "Funcionalidade 4 do Explorador",
+                    "Funcionalidade 5 do Explorador",
+                    "Funcionalidade 6 do Explorador",
+                    "Funcionalidade 7 do Explorador",
+                    "Funcionalidade 8 do Explorador",
+                    "Funcionalidade 9 do Explorador"
+                ],
+                icon: "https://i.postimg.cc/43Cx1GTs/CONE-PLANO-ONLIS-EXPLORADOR-1.png"
+            },
+            {
+                name: "Navegador",
+                price: "R$ 249,90/mês",
+                users: "10",
+                pdvs: "5",
+                features: [
+                    "Funcionalidade 1 do Navegador",
+                    "Funcionalidade 2 do Navegador",
+                    "Funcionalidade 3 do Navegador",
+                    "Funcionalidade 4 do Navegador",
+                    "Funcionalidade 5 do Navegador",
+                    "Funcionalidade 6 do Navegador",
+                    "Funcionalidade 7 do Navegador",
+                    "Funcionalidade 8 do Navegador",
+                    "Funcionalidade 9 do Navegador"
+                ],
+                icon: "https://i.postimg.cc/vZK1pC5b/CONE-PLANO-ONLIS-NAVEGADOR-1-B-1.png"
+            },
+            {
+                name: "Inovador",
+                price: "R$ 599,90/mês",
+                users: "20",
+                pdvs: "10",
+                features: [
+                    "Funcionalidade 1 do Inovador",
+                    "Funcionalidade 2 do Inovador",
+                    "Funcionalidade 3 do Inovador",
+                    "Funcionalidade 4 do Inovador",
+                    "Funcionalidade 5 do Inovador",
+                    "Funcionalidade 6 do Inovador",
+                    "Funcionalidade 7 do Inovador",
+                    "Funcionalidade 8 do Inovador",
+                    "Funcionalidade 9 do Inovador"
+                ],
+                icon: "https://i.postimg.cc/mgBGy0hg/CONE-PLANO-ONLIS-INOVADOR-1.png"
+            }
+        ];
+
+        let currentPlanIndex = 0;
+
+        function updatePlan() {
+            const plan = plans[currentPlanIndex];
+            document.getElementById("plan-name").innerText = plan.name;
+            document.getElementById("plan-price").innerText = plan.price;
+            document.getElementById("plan-users").innerText = plan.users;
+            document.getElementById("plan-pdvs").innerText = plan.pdvs;
+            document.getElementById("plan-icon").src = plan.icon;
+            const featuresList = document.getElementById("features-list");
+            featuresList.innerHTML = ""; // Limpa a lista de funcionalidades
+            plan.features.forEach(feature => {
+                const li = document.createElement("li");
+                li.innerHTML = feature + ' <span class="checkmark">✔️</span>';
+                featuresList.appendChild(li);
+            });
+        }
+
+        function changePlan(direction) {
+            if (direction === 'next') {
+                currentPlanIndex = (currentPlanIndex + 1) % plans.length;
+            } else if (direction === 'prev') {
+                currentPlanIndex = (currentPlanIndex - 1 + plans.length) % plans.length;
+            }
+            updatePlan();
+        }
+
+        function seeMore() {
+            alert("Veja mais funcionalidades!");
+        }
+
+        // Inicializa o primeiro plano
+        updatePlan();
+    </script>
+</body>
+</html>>
